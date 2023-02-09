@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.MainController">
+   <children>
+      <TitledPane animated="false" layoutX="-390.0" layoutY="-58.0" text="untitled" />
+      <Label layoutX="118.0" layoutY="33.0" prefHeight="46.0" prefWidth="159.0" text="학부생 회원가입" textAlignment="CENTER">
+         <font>
+            <Font name="Verdana" size="20.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="127.0" fitWidth="121.0" layoutX="130.0" layoutY="79.0">
+         <image>
+            <Image url="@scientistavatar_120780.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="Tf_id" layoutX="60.0" layoutY="227.0" prefHeight="26.0" prefWidth="203.0" promptText="아이디" />
+      <TextField fx:id="Pf_pw" layoutX="60.0" layoutY="264.0" prefHeight="25.0" prefWidth="203.0" promptText="비밀번호" />
+      <TextField fx:id="Tf_name" layoutX="60.0" layoutY="355.0" prefHeight="25.0" prefWidth="203.0" promptText="이름을(를) 입력하세요" />
+      <CheckBox fx:id="radio_male" layoutX="168.0" layoutY="482.0" mnemonicParsing="false" text="남성" />
+      <CheckBox fx:id="radio_female" layoutX="72.0" layoutY="482.0" mnemonicParsing="false" text="여성" />
+      <Label layoutX="60.0" layoutY="332.0" text="이름" />
+      <TextField fx:id="Tf_email" layoutX="60.0" layoutY="510.0" prefHeight="25.0" prefWidth="203.0" promptText="E-Mail">
+         <font>
+            <Font name="Verdana" size="12.0" />
+         </font>
+      </TextField>
+      <Button fx:id="Btn_Register" layoutX="54.0" layoutY="600.0" mnemonicParsing="false" onAction="#Stu_Register" prefHeight="38.0" prefWidth="274.0" text="가입하기" />
+      <DatePicker fx:id="dtpicker" layoutX="60.0" layoutY="560.0" prefHeight="25.0" prefWidth="203.0" />
+      <Label layoutX="60.0" layoutY="539.0" text="생년월일" />
+      <Button fx:id="btn_back" layoutX="54.0" layoutY="647.0" mnemonicParsing="false" onAction="#GoBack" prefHeight="38.0" prefWidth="274.0" text="뒤로" underline="true" />
+      <TextField fx:id="Pf_confirmpw" layoutX="60.0" layoutY="299.0" prefHeight="25.0" prefWidth="203.0" promptText="비밀번호 확인" />
+      <TextField fx:id="Tf_stunum" layoutX="60.0" layoutY="441.0" prefHeight="25.0" prefWidth="203.0" promptText="학번" />
+      <TextField fx:id="Tf_major" layoutX="60.0" layoutY="400.0" prefHeight="25.0" prefWidth="203.0" promptText="학과" />
+   </children>
+</Pane>

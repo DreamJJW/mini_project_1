@@ -1,16 +1,17 @@
 package Member;
 
 public class Member {
-    private String Name, Id, Pw, Email, Reg_Date;
+    private String Name, Id, Pw, Email, Reg_Date, Gender;
     private int Age;
-    public Member(String Name, String Id, String Pw, String Email, int Age, String Reg_Date) {
+    public Member(String Name, String Id, String Pw, String Email, String Reg_Date, String Gender) {
         this.Name = Name;
         this.Id = Id;
         this.Pw = Pw;
         this.Email = Email;
-        this.Age = Age;
         this.Reg_Date = Reg_Date;
+        this.Gender = Gender;
     }
+
     public String getID() {
         return this.Id;
     }
@@ -22,9 +23,6 @@ public class Member {
     }
     public String getEmail() {
         return this.Email;
-    }
-    public int Age() {
-        return this.Age;
     }
     public String Reg_Date() {
         return this.Reg_Date;
@@ -41,12 +39,11 @@ public class Member {
     public void setEmail(String Email){
         this.Email = Email;
     }
-    public void setAge(int Age){
-        this.Age = Age;
-    }
     public void setReg_Date(String Reg_Date){
         this.Reg_Date = Reg_Date;
     }
+    public void setGender(String Gender) {this.Gender = Gender;}
+    public String getGender() {return this.Gender;}
 
 
 

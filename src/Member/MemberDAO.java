@@ -15,7 +15,8 @@ public class MemberDAO {
     private ResultSet rs = null; // SQL ResultSet 반환
 
     Scanner scanner = new Scanner(System.in);
-    private final String INSERT = "INSERT INTO MEMBER values(?, ?, ?, ?, ?, ?, ?, ?)"; // SQL INSERT
+    private final String STUINSERT = "INSERT INTO STUDENT values(?, ?, ?, ?, ?, ?, ?, ?)"; // SQL INSERT
+    private final String PROFINSERT = "INSERT INTO PROFESSOR values(?, ?, ?, ?, ?, ?, ?, ?)"; // SQL INSERT
     private final String LOGIN = "SELECT Pw FROM MEMBER WHERE ID = ?"; // SQL LOGIN
     private final String DELETE = "DELETE MEMBER WHERE ID = ?"; // SQL DELETE
     private final String SELECTALL = "SELECT * FROM MEMBER"; // SQL SELECT
@@ -23,54 +24,44 @@ public class MemberDAO {
 
 
     // 학생 정보 삽입
-    public void stu_insert() {
+    public boolean stu_insert(Student student) {
         try {
             connection = dbConn.getConnection();
-            stmt = connection.prepareStatement(INSERT);
-
-            String Id = scanner.next(); // Id 입력
-            String Pw = scanner.next(); // Pw 입력
-            String Name = scanner.next(); // Name 입력
-            String Email = scanner.next(); // Email 입력
-            String Major = scanner.next(); // 학과 입력
-            Integer Stu_Num = scanner.nextInt(); // 학번 입력
-
-            stmt.setString(1, Id);
-            stmt.setString(2, Pw);
-            stmt.setString(3, Name);
-            stmt.setString(4, Email);
-            stmt.setString(5, Major);
-            stmt.setInt(6, Stu_Num);
+            stmt = connection.prepareStatement(STUINSERT);
+            stmt.setString(1, student.getID());
+            stmt.setString(2, student.getPw());
+            stmt.setString(3, student.getName());
+            stmt.setString(4, student.getEmail());
+            stmt.setString(5, student.Reg_Date());
+            stmt.setString(6, student.getMajor());
+            stmt.setInt(7, student.getStu_num());
+            stmt.setString(8, student.getGender());
             stmt.executeUpdate();
 
             System.out.println("학생 회원가입 완료.");
-
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             dbConn.close(stmt);
-        }
+        } return true;
     }
+
     
     // 교수 정보 삽입
-    public void prof_insert() {
+    public boolean prof_insert(Professor professor) {
         try {
             connection = dbConn.getConnection();
-            stmt = connection.prepareStatement(INSERT);
+            stmt = connection.prepareStatement(PROFINSERT);
 
-            String Id = scanner.next(); // Id 입력
-            String Pw = scanner.next(); // Pw 입력
-            String Name = scanner.next(); // Name 입력
-            String Email = scanner.next(); // Email 입력
-            String Major = scanner.next(); // 학과 입력
-            String Office = scanner.next(); // 연구실 입력
+            stmt.setString(1, professor.getID());
+            stmt.setString(2, professor.getPw());
+            stmt.setString(3, professor.getName());
+            stmt.setString(4, professor.getEmail());
+            stmt.setString(5, professor.Reg_Date());
+            stmt.setString(6, professor.getMajor());
+            stmt.setString(7, professor.getOffice());
+            stmt.setString(8, professor.getGender());
 
-            stmt.setString(1, Id);
-            stmt.setString(2, Pw);
-            stmt.setString(3, Name);
-            stmt.setString(4, Email);
-            stmt.setString(5, Major);
-            stmt.setString(6, Office);
             stmt.executeUpdate();
 
             System.out.println("교수 회원가입 완료.");
@@ -79,7 +70,7 @@ public class MemberDAO {
             e.printStackTrace();
         } finally {
             dbConn.close(stmt);
-        }
+        } return true;
     }
     
     // 학생 정보 삭제
@@ -117,8 +108,8 @@ public class MemberDAO {
             stmt = connection.prepareStatement(SELECTALL);
             while (rs.next()) {
                 Member m = new Member(rs.getString("Id"), rs.getString("Pw"),
-                        rs.getString("Name"), rs.getString("Email"), rs.getInt("Age"),
-                        rs.getString("Reg_Date")); // toString
+                        rs.getString("Name"), rs.getString("Email"),
+                        rs.getString("Reg_Date"), rs.getString("Gender")); // toString
                 memberList.add(m); // 멤버 배열에 삽입
             }
 
