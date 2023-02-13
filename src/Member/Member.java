@@ -1,7 +1,12 @@
 package Member;
 
 public class Member {
-    private String Name, Id, Pw, Email, Reg_Date, Gender;
+    private String Name;
+    String Id;
+    private String Pw;
+    private String Email;
+    String Reg_Date;
+    private String Gender;
     private int Age;
     public Member(String Name, String Id, String Pw, String Email, String Reg_Date, String Gender) {
         this.Name = Name;
@@ -45,6 +50,9 @@ public class Member {
     public void setGender(String Gender) {this.Gender = Gender;}
     public String getGender() {return this.Gender;}
 
+    public String toString() {
+        return "[ID: " + Id + ", 이름: " + Name + ", 비밀번호: " + Pw + "이메일: " + Email + "가입일 " + Reg_Date + "성별: " + Gender + "]";
+    }
 
 
 }

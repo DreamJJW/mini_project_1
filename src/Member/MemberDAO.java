@@ -1,5 +1,7 @@
 package Member;
 import Database.dbConn;
+import javafx.scene.SubScene;
+import javafx.scene.control.Alert;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,7 +21,8 @@ public class MemberDAO {
     private final String PROFINSERT = "INSERT INTO PROFESSOR values(?, ?, ?, ?, ?, ?, ?, ?)"; // SQL INSERT
     private final String LOGIN = "SELECT Pw FROM MEMBER WHERE ID = ?"; // SQL LOGIN
     private final String DELETE = "DELETE MEMBER WHERE ID = ?"; // SQL DELETE
-    private final String SELECTALL = "SELECT * FROM MEMBER"; // SQL SELECT
+    private final String SELECTALLSTU = "SELECT * FROM STUDENT"; // SQL Student SELECT
+    private final String SELECTALLPROF = "SELECT * FROM PROFESSOR"; // SQL Student SELECT
     private final String SEARCH = "SELECT * FROM MEMBER WHERE NAME = ?";
 
 
@@ -39,8 +42,14 @@ public class MemberDAO {
             stmt.executeUpdate();
 
             System.out.println("학생 회원가입 완료.");
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            if (e.getMessage().contains("무결성")) { // ID 중복 체크 (무결성 검사)
+                Alert noID = new Alert(Alert.AlertType.ERROR);
+                noID.setHeaderText("로그인 오류");
+                noID.setContentText("이미 존재하는 ID입니다.");
+                noID.showAndWait();
+            }
         } finally {
             dbConn.close(stmt);
         } return true;
@@ -68,6 +77,12 @@ public class MemberDAO {
 
         } catch (SQLException e){
             e.printStackTrace();
+            if (e.getMessage().contains("무결성")) { // ID 중복 체크 (무결성 검사)
+                Alert noID = new Alert(Alert.AlertType.ERROR);
+                noID.setHeaderText("로그인 오류");
+                noID.setContentText("이미 존재하는 ID입니다.");
+                noID.showAndWait();
+            }
         } finally {
             dbConn.close(stmt);
         } return true;
@@ -100,17 +115,18 @@ public class MemberDAO {
         }
     }
 
-    // 모든 멤버 목록 조회
-    public List<Member> selectAll() {
-        List<Member> memberList = new ArrayList<>(); // 멤버 배열 선언
+    // 모든 학생 목록 조회
+    public List<Student> selectAllStu() {
+        List<Student> StuList = new ArrayList<>(); // 멤버 배열 선언
         try {
             connection = dbConn.getConnection();
-            stmt = connection.prepareStatement(SELECTALL);
+            stmt = connection.prepareStatement(SELECTALLSTU);
+            rs = stmt.executeQuery();
             while (rs.next()) {
-                Member m = new Member(rs.getString("Id"), rs.getString("Pw"),
-                        rs.getString("Name"), rs.getString("Email"),
-                        rs.getString("Reg_Date"), rs.getString("Gender")); // toString
-                memberList.add(m); // 멤버 배열에 삽입
+                Student m = new Student(rs.getString("ID"),
+                        rs.getString("NAME"), rs.getString("PW"), rs.getString("EMAIL"),
+                        rs.getString("REGDATE"),  rs.getString("MAJOR"), rs.getInt("STUNUM"), rs.getString("GENDER")); // toString
+                StuList.add(m); // 멤버 배열에 삽입
             }
 
         } catch (SQLException e) {
@@ -119,8 +135,33 @@ public class MemberDAO {
             dbConn.close(stmt);
             dbConn.close(rs);
         }
-        return memberList;
+        return StuList;
     }
+
+    // 모든 교수 목록 조회
+    public List<Professor> selectAllProf() {
+        List<Professor> ProfList = new ArrayList<>(); // 멤버 배열 선언
+        try {
+            connection = dbConn.getConnection();
+            stmt = connection.prepareStatement(SELECTALLPROF);
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                Professor prof = new Professor(rs.getString("ID"),
+                        rs.getString("NAME"), rs.getString("PW"), rs.getString("EMAIL"),
+                        rs.getString("REGDATE"),  rs.getString("MAJOR"), rs.getString("OFFICE"), rs.getString("GENDER")); // toString
+                ProfList.add(prof); // 멤버 배열에 삽입
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            dbConn.close(stmt);
+            dbConn.close(rs);
+        }
+        return ProfList;
+    }
+
+
 
     // 멤버 검색 (이름)
     // public Member searchMem(String Name) {
@@ -128,29 +169,29 @@ public class MemberDAO {
     //    }
 
     // 로그인
-    public int login(String Id, String Pw) {
-        try {
-            connection = dbConn.getConnection();
-            stmt = connection.prepareStatement(LOGIN);
-            stmt.setString(1, Id);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                if (rs.getString(1).contentEquals(Pw)) {
-                    // System.out.println("로그인 성공");
-                    return 1;
-                }
-                else {
-                    // System.out.println("로그인 실패, 비밀번호 오류");
-                    return 0;
-                }
-            }
-            // System.out.println("로그인 실패, 존재하지 않는 아이디입니다");
-            return -1;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    return -2;
-    }
+//    public int login(String Id, String Pw) {
+//        try {
+//            connection = dbConn.getConnection();
+//            stmt = connection.prepareStatement(LOGIN);
+//            stmt.setString(1, Id);
+//            rs = stmt.executeQuery();
+//            if (rs.next()) {
+//                if (rs.getString(1).contentEquals(Pw)) {
+//                    // System.out.println("로그인 성공");
+//                    return 1;
+//                }
+//                else {
+//                    // System.out.println("로그인 실패, 비밀번호 오류");
+//                    return 0;
+//                }
+//            }
+//            // System.out.println("로그인 실패, 존재하지 않는 아이디입니다");
+//            return -1;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    return -2;
+//    }
 
 
 
