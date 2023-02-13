@@ -23,4 +23,10 @@ public class Professor extends Member{
         this.office = office;
     }
 
+    @Override
+    public String toString() {
+        return "[ID: " + Id + ", 이름: " + getName() + ", 비밀번호: " + getPw() + ", 이메일: " + getEmail() + ", 가입일 " + Reg_Date + ", 성별: " + getGender() + "" +
+                ", 학과: " + major + ", 연구실: " + office+"]";
+    }
+
 }
